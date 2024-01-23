@@ -1,0 +1,632 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "MIVP2APSTPLN-API",
+    "dateExported": "2023-10-04T03:43:59.188Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "78145e30-0add-476e-a693-0a6e35c79aa9",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api//oracletest/testfunctioncur2",
+            "url": "http://127.0.0.1:8000/api/oracletest/infotahun",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2022-12-27T08:31:44.524Z",
+            "modified": "2022-12-28T00:04:06.053Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bb1f4ecb-7fc0-45b1-bc23-bfc33abc804a",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/user",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/user",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-01-02T00:19:45.389Z",
+            "modified": "2023-01-02T00:19:45.389Z",
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "769e03b8-f044-48a1-8c7f-80c733f6b6aa",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/register",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/register",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-01-03T01:14:49.291Z",
+            "modified": "2023-05-02T06:17:37.424Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Adi Setiadi"
+                    },
+                    {
+                        "name": "email",
+                        "value": "adijewel79@yahoo.com"
+                    },
+                    {
+                        "name": "username",
+                        "value": "adis"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "+6285691848401"
+                    },
+                    {
+                        "name": "password",
+                        "value": "adis1234"
+                    },
+                    {
+                        "name": "role",
+                        "value": "ADMIN"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "07f7e2e1-f4e6-4c9c-91d9-587d09293a23",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/login",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/login",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-01-18T00:55:49.021Z",
+            "modified": "2023-05-22T06:55:30.772Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "adis"
+                    },
+                    {
+                        "name": "password",
+                        "value": "adis1234"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9yZWdpc3RlciIsImlhdCI6MTY3NDA5MDc1MywiZXhwIjoxNjc0MDk0MzUzLCJuYmYiOjE2NzQwOTA3NTMsImp0aSI6ImQ5T2RUWDhQRGZKdTgwMEgiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.PtVpmQbecPPldT6AmZ4l00TBoN56Tsir1vvX6gKYq2o"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d1f9f659-5b8f-4d5b-8894-2ecbb6c351de",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/login Copy",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/login",
+            "method": "POST",
+            "sortNum": 55000,
+            "created": "2023-09-14T07:30:51.485Z",
+            "modified": "2023-09-14T07:39:54.158Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "adis"
+                    },
+                    {
+                        "name": "password",
+                        "value": "adis1234"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "b152cac1-1073-4bc8-ab40-e90eb7c20543",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/logout",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/logout",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-01-18T01:08:53.780Z",
+            "modified": "2023-01-19T04:05:41.140Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9sb2dpbiIsImlhdCI6MTY3NDEwMDk0OSwiZXhwIjoxNjc0MTA0NTQ5LCJuYmYiOjE2NzQxMDA5NDksImp0aSI6IjE5R0x0cjkySUtXanIxWUQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.ThDfW9qaV8Ay_BjpET3BLSKfaost1MPh8VPkj7di2cM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "01fe7ca2-03af-4960-bb41-5dde3e07009e",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/lrefresh",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/refresh",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-01-18T01:35:58.195Z",
+            "modified": "2023-01-19T01:19:28.852Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9yZWdpc3RlciIsImlhdCI6MTY3NDA5MDc1MywiZXhwIjoxNjc0MDk0MzUzLCJuYmYiOjE2NzQwOTA3NTMsImp0aSI6ImQ5T2RUWDhQRGZKdTgwMEgiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.PtVpmQbecPPldT6AmZ4l00TBoN56Tsir1vvX6gKYq2o"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f4b11414-e68f-47e2-9996-9d610061d636",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/userProfile",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/userProfile",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-01-18T01:43:41.333Z",
+            "modified": "2023-01-19T01:20:22.119Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9yZWZyZXNoIiwiaWF0IjoxNjc0MDkwNzUzLCJleHAiOjE2NzQwOTQ3NjgsIm5iZiI6MTY3NDA5MTE2OCwianRpIjoiVHNocjc4MVdQaVludXZiTCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.h43OFPeo_zyEVxwZuL17EodxgmaNetGYYN3Gm1rW9r4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9bd61e3d-6fc1-4209-90ed-6e9a05ad06e2",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/dashboard",
+            "url": "http://127.0.0.1:8000/api/dashboard",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-01-19T04:03:58.139Z",
+            "modified": "2023-09-13T03:54:37.477Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTQ1NzcyNTUsImV4cCI6MTY5NDU4MDg1NSwibmJmIjoxNjk0NTc3MjU1LCJqdGkiOiJacjRlNFN6dDlDN3NJTXNMIiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8mj1SjJptjBVdsQxL5VHuxjM0XYfBmTwK1nIm-xXL5w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9d5e1781-1178-425e-b652-dde670d6f15a",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/getdistribusi",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/getmstdistribusi",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2023-03-15T03:39:39.663Z",
+            "modified": "2023-09-15T00:28:01.767Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTQ3Mzc2MjIsImV4cCI6MTY5NDc0MTIyMiwibmJmIjoxNjk0NzM3NjIyLCJqdGkiOiJpTEpYUk9mUWtES094amdzIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.rICqCHddiyDm7qfK9y32PQ1Q63nN48bBDIjOxyCSdiI"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6e8ba10e-90d0-498e-9e12-b78e59e2406b",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/getmstunitap",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/getmstunitap",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2023-03-15T03:50:18.873Z",
+            "modified": "2023-07-03T06:11:34.652Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "kddist",
+                        "value": "11"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2ODgzNjQ2ODEsImV4cCI6MTY4ODM2ODI4MSwibmJmIjoxNjg4MzY0NjgxLCJqdGkiOiIzU0VnR2dYbFBTYmp4eEVGIiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.9Bo9FVGDG5hZekI7vAgqiIUnmNlzKMkT17jJOwoExH0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b40d62f4-ff0c-4cf8-aaa3-c574bf8406c3",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/saktiStatus",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/saktistatus",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2022-12-28T02:50:41.912Z",
+            "modified": "2023-09-14T09:26:20.881Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTQ2ODI4MzQsImV4cCI6MTY5NDY4NjQzNCwibmJmIjoxNjk0NjgyODM0LCJqdGkiOiJLT2ppSHJsOEZ0bEI1enRwIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.QFsCLm3b2fDdM5Lxb8smMI-WjSkSLiTCuv9olg8NWpA"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a96752b8-81ae-449f-9c83-bd607c5db667",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/mivbelumflag",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/mivbelumflag",
+            "method": "POST",
+            "sortNum": 125000,
+            "created": "2023-03-15T06:15:20.895Z",
+            "modified": "2023-09-22T06:33:52.527Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    },
+                    {
+                        "name": "kdbank",
+                        "value": "009"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTUzNjQ0MTcsImV4cCI6MTY5NTM2ODAxNywibmJmIjoxNjk1MzY0NDE3LCJqdGkiOiJiZndjcXJTb1k0S0ZVb0paIiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IbCDKnFgQaFTOm-QQxtSezlOWhiwVYb_wE8fCRpNzas"
+            },
+            "tests": []
+        },
+        {
+            "_id": "8d636663-432a-4bd2-b911-8a2c4c690f7d",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/mivlunasflagalldist",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/mivlunasflagalldist",
+            "method": "POST",
+            "sortNum": 127500,
+            "created": "2023-03-15T06:28:30.224Z",
+            "modified": "2023-07-03T03:33:50.918Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2ODgzNTUxMzIsImV4cCI6MTY4ODM1ODczMiwibmJmIjoxNjg4MzU1MTMyLCJqdGkiOiI1N0pKRzAxNjNseUZQbVM4Iiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.k0gOoaOgyuyGaHuSSFXgb6uGOObu-vFo_uRLXEq8uvE"
+            },
+            "tests": []
+        },
+        {
+            "_id": "62f58b19-5178-4339-aeb7-4ed0f664ffe3",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/mivrekonplnvsbankuiw",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/mivrekonplnvsbankuiw",
+            "method": "POST",
+            "sortNum": 128750,
+            "created": "2023-03-15T08:43:13.795Z",
+            "modified": "2023-09-13T03:54:56.905Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    },
+                    {
+                        "name": "kdbank",
+                        "value": "009"
+                    },
+                    {
+                        "name": "kddist",
+                        "value": "12"
+                    },
+                    {
+                        "name": "kdarea",
+                        "value": "ALL"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTQ1NzcyNTUsImV4cCI6MTY5NDU4MDg1NSwibmJmIjoxNjk0NTc3MjU1LCJqdGkiOiJacjRlNFN6dDlDN3NJTXNMIiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8mj1SjJptjBVdsQxL5VHuxjM0XYfBmTwK1nIm-xXL5w"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e999223f-66d4-4699-b085-e49b8a16db6f",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/saktidaftar",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/saktidaftar?blthlaporan",
+            "method": "POST",
+            "sortNum": 129375,
+            "created": "2023-03-16T07:26:51.282Z",
+            "modified": "2023-03-17T02:55:04.054Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "blthlaporan",
+                    "value": "",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    },
+                    {
+                        "name": "kdgol",
+                        "value": "2"
+                    },
+                    {
+                        "name": "kdgerak",
+                        "value": "22"
+                    },
+                    {
+                        "name": "kdpending",
+                        "value": "1"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9yZWdpc3RlciIsImlhdCI6MTY3OTAyMTY3NywiZXhwIjoxNjc5MDI1Mjc3LCJuYmYiOjE2NzkwMjE2NzcsImp0aSI6IkQ4UHBtUUVabkR3ZmhQMjkiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.egl_rouOEFzkG7Ih9SitTdH7oQPoAsiOvwtMY8tpLqo"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6cdb4a89-6833-47bf-9097-a1a421802488",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/saktistatus",
+            "url": "http://127.0.0.1:8000/api/mivp2apstpln/saktistatus",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-03-15T06:13:41.023Z",
+            "modified": "2023-03-15T08:57:38.939Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "blthlaporan",
+                        "value": "202303"
+                    },
+                    {
+                        "name": "kodebank",
+                        "value": "ALL"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL21pdnAyYXBzdHBsbi9sb2dpbiIsImlhdCI6MTY3ODg3MDUxOSwiZXhwIjoxNjc4ODc0MTE5LCJuYmYiOjE2Nzg4NzA1MTksImp0aSI6IlQ1d1c0OFpvaVRDNTBITUwiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.8QfrGIKOUs_9gDiyPRRfYJ_Ic5IR9n5djxY800sTiTE"
+            },
+            "tests": []
+        },
+        {
+            "_id": "28997de4-b5ad-4282-9860-9c5f6c6a8087",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://127.0.0.1:8000/api/mivp2apstpln/lgetlistmenu",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/getlistmenu",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2023-03-21T08:57:08.568Z",
+            "modified": "2023-09-15T00:58:05.122Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "emiluser",
+                        "value": "adijewel79@yahoo.com"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTQ3MzkzNTQsImV4cCI6MTY5NDc0Mjk1NCwibmJmIjoxNjk0NzM5MzU0LCJqdGkiOiIyQmpYYTR2ZjNka0FCR1NQIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.H5G7SdajD0fAwYsbROwuhzZ5YWdSYquIRzFL2D-l9O0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "304d1a67-e5dc-4a88-83a6-8c802afa42e6",
+            "colId": "a005a089-f15f-46c9-8bb2-27dea6fdbe10",
+            "containerId": "",
+            "name": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/getmstbankmiv",
+            "url": "http://mivp2apstpln-api-v2.test/api/mivp2apstpln/getmstbankmiv",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-06-19T08:41:17.972Z",
+            "modified": "2023-09-25T00:24:11.796Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "kdbank",
+                        "value": "200"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWl2cDJhcHN0cGxuLWFwaS12Mi50ZXN0L2FwaS9taXZwMmFwc3RwbG4vbG9naW4iLCJpYXQiOjE2OTU2MDE0MzUsImV4cCI6MTY5NTYwNTAzNSwibmJmIjoxNjk1NjAxNDM1LCJqdGkiOiJ1UWtoR0xqbjlHZWUwWUdnIiwic3ViIjoiNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4_f7y3VAM_9Aw3dBTQ_6haVR5vwYb0-VgiZz7vZkwhM"
+            },
+            "tests": []
+        }
+    ]
+}

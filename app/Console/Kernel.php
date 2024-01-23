@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('php artisan sg:miv-clear-cache-cron')->everyMinute();
+        $schedule->command('php artisan sg:miv-deletefile-tempreport-cron')->everyMinute();
     }
 
     /**

@@ -1,0 +1,14 @@
+---1 db dirubah di env masih baca ke db lama
+composer update
+composer dump-autoload
+
+php artisan route:clear
+php artisan config:clear
+php artisan cache:clear
+
+
+---2 buat Cron job laravl
+php artisan make:command MIVHapusTempRepot
+
+ --panggill job
+    php artisan sg:miv-seqeduler-cron

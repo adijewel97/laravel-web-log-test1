@@ -1,0 +1,37 @@
+composer require realrashid/sweet-alert
+
+
+Include SweetAlert 2 View
+
+Include 'sweetalert::alert' in master layout
+
+@include('sweetalert::alert')
+
+and run the below command to publish the package assets.
+
+php artisan sweetalert:publish
+
+
+---
+in your config/app.php configuration file:
+
+'providers' => [
+    /*
+    * Package Service Providers...
+    */
+    RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+],
+--
+Also, add the Alert facade to the aliases array in your app configuration file:
+
+'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
+---
+Include SweetAlert 2 View
+
+Include 'sweetalert::alert' in master layout
+
+@include('sweetalert::alert')
+
+---
+php artisan sweetalert:publish

@@ -11,7 +11,10 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "opcodesio/log-viewer": "^1.7"
+        "league/flysystem-sftp": "~1.0",
+        "opcodesio/log-viewer": "^1.7",
+        "realrashid/sweet-alert": "^7.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
