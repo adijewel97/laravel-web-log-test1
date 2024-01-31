@@ -48,14 +48,34 @@
                     <div class="callout callout-info">
                         {{-- <h5><i class="fas fa-info"></i> Note:</h5> --}}
                         <form action="" enctype="multipart/form-data">
-                            <label for="" class="col-sm-6 col-form-label">
-                                Tanggal : <time datetime="<?php echo date('c'); ?>"><?php echo date('d/m/Y H:i:s'); ?></time>
-                            </label>
-                            <div class="row mt-1" style="font-size:11px">
-                                <div class="col-4">
+                            <div class="row" style="font-size:11px">
+                                <label for="" class="col-sm-2 col-form-label">
+                                    Nomor Usulan MIV
+                                </label>
+                                <div class="col-3">
+                                    <input type="input" class="form-control" id="nosusulan" value='POS23BTG20240116002' required autofocus>
                                 </div>
-                                <div class="col-4">
-                                    <button id='BtnFindDataRCN' name='next' type='button' class='btn btn-block btn-primary'><i class="fa-solid fa-magnifying-glass"></i> Tampilkan File *.RCN
+                            </div>
+                            <div class="row mt-2" style="font-size:11px">
+                                <label for="" class="col-sm-2 col-form-label">
+                                    Tanggal File di TXT
+                                </label>
+                                <div class="col-3">
+                                    <div class="input-group date" id="tglfiletxt" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#tglfiletxt" />
+                                        <div class="input-group-append" data-target="#tglfiletxt" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-1" style="font-size:11px">
+                                <div class="col-5">
+                                </div>
+                                <div class="col-2">
+                                    <button id='BtnFindDataRCN' name='next' type='button' class='btn btn-block btn-primary'>
+                                        <i class="fa-solid fa-magnifying-glass"></i> Tampilkan Data
                                     </button>
                                 </div>
                             </div>
@@ -64,9 +84,18 @@
                 </fieldset>
                 <br>
                 <div class="form-group">
-                    <label>File akan di Download dan Proses :</label>
-                    <select id="pathfile" style="height: 100px;" multiple class="form-control listfile">
-                    </select>
+                    <div class="row mt-2" style="font-size:11px">
+                        <div class="col-8">
+                            <label>Isi File *.txt : </label> <br> <label id="namafile_txt"></label>
+                            <select id="isifile_txt" style="height: 100px;" multiple class="form-control listfile">
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label>Isi File *.txt.ctl :</label> <br> <label id="namafile_txtctl"></label>
+                            <select id="isifile_txtctl" style="height: 100px;" multiple class="form-control listfile">
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-1" style="font-size:11px">
                     <div class="col-5">
@@ -136,29 +165,74 @@
 
     <!-- Page specific script -->
     <script type="text/javascript">
-        TampilkanListFileRCN();
         // alert('chek 1');
-        function TampilkanListFileRCN() {
+        function TampilkanFileTXT_NamaFile_txt(nosusulan, tglusulan) {
             $.ajax({
-                url: "{{ route('mproses.daftar-file-ftp-rcn') }}",
+                url: "{{ route('mproses.proses-nama-file-txt') }}",
                 dataType: 'json',
+                data: {
+                    vnousulan: nosusulan,
+                    vtglfile: tglusulan,
+                },
                 success: function(respon) {
                     console.log(respon);
-                    $("#pathfile").html('');
-                    if (respon.status === '200') {
-                        options = '';
-                        respon.downloaded_files.forEach(function(object) {
-                            const file = object.file;
-                            const path = object.path;
-                            const status = object.status;
+                    // console.log(respon.status);
+                    // $("#pathfile").html('');
+                    namafiletxt = respon.nama_file.data;
+                    // console.log(namafiletxt[0].NAMAFILE_TXT);
+                    options1 = '';
+                    options2 = '';
+                    if (respon.status == '200') {
+                        options1 = namafiletxt[0].NAMAFILE_TXT;
+                        options2 = '<label>' + namafiletxt[0].NAMAFILE_TXT_CTL + '</label>';
+                    };
 
-                            options = options + "<option  value=" + path + '/' + file +
-                                ">" + file +
-                                "</option>";
+                    $("#namafile_txt").html(options1);
+                    $("#namafile_txtctl").html(options2);
+
+                    // }
+                },
+                error: function(req, status, error) {
+                    var errorMessage = "";
+
+                    if (req.responseJSON && req.responseJSON.Message) {
+                        errorMessage = req.responseJSON.Message;
+                    } else if (req.responseText) {
+                        errorMessage = req.responseText;
+                    } else {
+                        errorMessage = "An unknown error occurred.";
+                    }
+                    ShowMsgSm('Sukses', errorMessage, 'MB_CLOSE');
+                }
+            });
+        }
+
+        function TampilkanFileTXT_isifile_txt(nosusulan, tglusulan) {
+            $.ajax({
+                url: "{{ route('mproses.proses-detail-file-txt') }}",
+                dataType: 'json',
+                data: {
+                    vnousulan: nosusulan,
+                    vtglfile: tglusulan,
+                },
+                success: function(respon) {
+                    console.log(respon);
+                    // console.log(respon.status);
+                    // $("#pathfile").html('');
+                    //isifiletxt = respon.info_isi_data.data;
+                    // console.log(isifiletxt[0].NAMAFILE_TXT);
+                    options = '';
+                    if (respon.status == '200') {
+                        isifiletxt = respon.txtfile.data;
+                        // console.log(isifiletxt);
+                        options = '';
+                        isifiletxt.forEach(function(object) {
+                            const isidata = object.DATA; // Note the correction here, using "DATA" instead of "data"
+                            options += "<option>" + isidata + "</option>";
                         });
 
-                        $("#pathfile").html(options);
-                    }
+                        $("#isifile_txt").html(options);
+                    };
                 },
                 error: function(req, status, error) {
                     var err = req.responseText.Message;
@@ -168,148 +242,124 @@
             });
         }
 
-        function tampilmydatatable(listdata) {
-            // var json = '[{"company_id":"1","company_name":"schneider"}]';
-            var json = listdata;
-            console.log('aku chek : ' + json);
-            $('#mytable').DataTable({
-                data: JSON.parse(json),
-                processing: true,
-                // serverSide: true,
-                destroy: true,
-                // responsive: true,
-                autoWidth: true,
-                searching: true,
-                paging: false,
-                language: {
-                    'loadingRecords': '&nbsp;',
-                    'processing': 'Loading...',
-                    'emptyTable': 'No records are available',
+        function TampilkanFileTXT_rekapfile_txtctl(nosusulan, tglusulan) {
+            $.ajax({
+                url: "{{ route('mproses.proses-rekap-file-txt') }}",
+                dataType: 'json',
+                data: {
+                    vnousulan: nosusulan,
+                    vtglfile: tglusulan,
                 },
-                // scrollY: "300px",
-                scrollX: true,
-                // scrollCollapse: true,
-                // fixedColumns: {
-                //     left: 2
-                // },
-                dom: 'Blfrtip',
-                buttons: [{
-                        extend: 'excelHtml5',
-                        text: '<i class="fa fa-file-excel"></i> Excel',
-                        titleAttr: 'Excel',
-                        className: 'dt-button buttons-excel buttons-html5 btn btn-xs btn-success',
-                        // className: 'green glyphicon glyphicon-list-alt',
-                        footer: true,
-                        title: 'DAFTAR PROSES DOWNLOAD FILE RCN BANK MIV',
-                        filename: 'MIV-DownloadFileRcnBank_', /// + DateTime.Now.ToString("ddMMMyyyy"),
-                        exportOptions: {
-                            columns: "thead th:not(.noExport)",
-                            rows: function(indx, rowData, domElement) {
-                                return $(domElement).css("display") != "none";
-                            }
-                        },
-                        // customize: function(xlsx) {
-                        //     $sheet - > appendRow(2, array(
-                        //         'appended', 'appended'
-                        //     ));
-                        // }
-                        // exportOptions: {
-                        //     columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                        // }
-                    },
-                    {
-                        extend: 'pdf',
-                        footer: true,
-                        text: '<i class="fa fa-file-pdf"></i> PDF  ',
-                        className: 'dt-button buttons-excel buttons-html5 btn btn-xs btn-danger',
-                        footer: true,
-                        title: 'DAFTAR PROSES DOWNLOAD FILE RCN BANK MIV',
-                        filename: 'MIV-DownloadFileRcnBank_', /// + DateTime.Now.ToString("ddMMMyyyy"),
-                        orientation: 'landscape',
-                        // exportOptions: {
-                        //     columns: [0, 1, 3, 5]
-                        // }
-                    }
-                ],
-                columnDefs: [{
-                    "defaultContent": "",
-                    "targets": "_all"
-                }],
-                columns: [{
-                    title: 'NO',
-                    data: null,
-                    sortable: false,
-                    className: "text-right",
-                    width: "1%",
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                }, {
-                    title: 'NAMAFILE',
-                    data: 'NAMAFILE',
-                    width: "30%",
-                }, {
-                    title: 'TGLPROSES',
-                    data: 'TGLPROSES',
-                    width: "10%",
-                }, {
-                    title: 'KETERANGAN ',
-                    data: 'KET',
-                    // className: 'text-right',
-                    width: "40%",
-                }, {
-                    data: 'USERID',
-                    width: "20%",
-                }]
+                success: function(respon) {
+                    console.log(respon);
+                    // console.log(respon.status);
+                    // $("#pathfile").html('');
+                    //isifiletxt = respon.info_isi_data.data;
+                    // console.log(isifiletxt[0].NAMAFILE_TXT);
+                    options = '';
+                    if (respon.status == '200') {
+                        isifiletxt = respon.rkpfile.data;
+                        // console.log(isifiletxt);
+                        options = '';
+                        isifiletxt.forEach(function(object) {
+                            const isidata = object.DATA; // Note the correction here, using "DATA" instead of "data"
+                            options += "<option>" + isidata + "</option>";
+                        });
+
+                        $("#isifile_txtctl").html(options);
+                    };
+                },
+                error: function(req, status, error) {
+                    var err = req.responseText.Message;
+                    console.log(err);
+                    $("#pathfile").html('');
+                }
             });
         }
 
         $(function() {
             //1 cari file RCN yang akan di tampilkan di list dari ftp MIV kiriman Bank
             document.getElementById("BtnFindDataRCN").onclick = function() {
-                TampilkanListFileRCN();
-                $("#tbodyid").empty();
+                //1a ambil nama file
+                const inosusulan = document.getElementById('nosusulan');
+                var vnosusulan = inosusulan.value;
+                //1b tanggal file
+                const itglsusulan = $("#tglfiletxt").find("input").val();
+                const MyBulan = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                var mytgl = $("#tglfiletxt").find("input").val();
+                var getinputblth = mytgl.split(" ");
+                let blthlaporan = MyBulan.indexOf(getinputblth[1]) + 1;
+                const zeroPad = (num, places) => String(num).padStart(places, '0')
+                let vtglusulan = moment(getinputblth[1] + ' ' + getinputblth[0] + ' ' + getinputblth[2], 'MMM DD YYYY').format('YYYYMMDD') + ' 2:30:25';
+
+                // alert(vtglusulan);
+                if (vnosusulan === '') {
+                    ShowMsgSm('Error', 'Nomor Usulan MIV Tidak Boleh Kosong.', 'MB_CLOSE');
+                    setTimeout(() => {
+                        // document.getElementById("nosusulan").focus();
+                        $("#nosusulan").focus();
+                    }, 2);
+                } else {
+                    TampilkanFileTXT_NamaFile_txt(vnosusulan, vtglusulan);
+                    TampilkanFileTXT_isifile_txt(vnosusulan, vtglusulan);
+                    TampilkanFileTXT_rekapfile_txtctl(vnosusulan, vtglusulan);
+                }
             }
 
             //2 download file struk ke local device
             document.getElementById("BtnPoeseRCN").onclick = function() {
+                //1a ambil nama file
+                const inosusulan = document.getElementById('nosusulan');
+                var vnosusulan = inosusulan.value;
+                //1b tanggal file
+                const itglsusulan = $("#tglfiletxt").find("input").val();
+                const MyBulan = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                //1c nama file txt
+                var labelElement = document.getElementById("namafile_txt");
+                var Nama_file_txt = labelElement.innerText;
 
-                //2 ambil file list dari pilihan list browser
-                var vlistfile = [];
-                // Get the select element by its ID
-                var selectElement = document.getElementById("pathfile");
-                // Loop through the options and extract their values
-                for (var i = 0; i < selectElement.options.length; i++) {
-                    vlistfile.push(selectElement.options[i].value);
-                }
 
+                var mytgl = $("#tglfiletxt").find("input").val();
+                var getinputblth = mytgl.split(" ");
+                let blthlaporan = MyBulan.indexOf(getinputblth[1]) + 1;
+                const zeroPad = (num, places) => String(num).padStart(places, '0')
+                let vtglusulan = moment(getinputblth[1] + ' ' + getinputblth[0] + ' ' + getinputblth[2], 'MMM DD YYYY').format('YYYYMMDD') + ' 2:30:25';
+
+                // console.log(labelContent);
+                // ShowMsgSm('Sukses', 'Chek ' + labelContent, 'MB_CLOSE');
                 $.ajax({
-                    url: "{{ route('mproses.proses-file-ftp-rcn') }}",
+                    url: "{{ route('mproses.proses-file-txt-pos') }}",
                     dataType: 'json',
                     data: {
-                        vnamafile: vlistfile.join(", ")
+                        vnousulan: vnosusulan,
+                        vtglfile: vtglusulan,
+                        vNama_file_txt: Nama_file_txt,
+                        // vIsi_file_txt: vlistfile.join("\n "),
                     },
                     success: function(response) {
                         console.log(response);
-                        //Iterating through the array using forEach
-                        // var res_file = response.downloaded_files;
-                        // res_file.forEach((file, index) => {
-                        if (response.status = '200') {
+                        if (response.kdstatus = '200') {
                             // ShowMsgSm('Sukses', response.message, 'MB_CLOSE');
-                            ShowMsgSm('Sukses', 'Jumlah file yang diproses Sebayak = ' + response.downloaded_files.length + ' File.', 'MB_CLOSE');
-                            listdata = JSON.stringify(response.info_progres_ctl.data);
-                            tampilmydatatable(listdata);
+                            ShowMsgSm('Sukses', response.message, 'MB_CLOSE');
+                            // listdata = JSON.stringify(response.info_progres_ctl.data);
+                            // tampilmydatatable(listdata);
                         } else {
                             ShowMsgSm('Error', esponse.message, 'MB_CLOSE');
                         };
-                        TampilkanListFileRCN();
+                        // TampilkanListFileRCN();
                     },
                     error: function(req, status, error) {
                         var err = req.responseText.Message;
                         console.log(req.responseJSON);
-                        ShowMsgSm('Error', 'Terjadi kesalahan saat Baca File RCN.',
+                        ShowMsgSm('Error', 'Terjadi kesalahan saat Membuat file TXT MIV.',
                             'MB_CLOSE');
-                        TampilkanListFileRCN();
+                        // TampilkanListFileRCN();
                     }
                 });
             }
@@ -330,14 +380,17 @@
     <script>
         $(function() {
             //Date picker
-            $('#reservationdate').datetimepicker({
-                // format: 'L',
-                format: 'MMMM YYYY',
+            // $('#tglfiletxt').datetimepicker({
+            //     // format: 'L',
+            //     format: 'MMMM YYYY',
+            // });
+            $('#tglfiletxt').datetimepicker({
+                format: 'DD MMMM YYYY',
             });
 
             //isi tanggal hari ini
-            let nowdate = moment(Date.now()).format('MMMM YYYY');
-            $("#reservationdate").find("input").val(nowdate);
+            let nowdate = moment(Date.now()).format('DD MMMM YYYY');
+            $("#tglfiletxt").find("input").val(nowdate);
 
         });
     </script>

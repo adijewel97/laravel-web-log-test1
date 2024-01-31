@@ -140,7 +140,7 @@
         // alert('chek 1');
         function TampilkanListFileRCN() {
             $.ajax({
-                url: "{{ route('mproses.daftar-file-ftp-rcn') }}",
+                url: "{{ route(mproses.proses-nama-file-txt') }}",
                 dataType: 'json',
                 success: function(respon) {
                     console.log(respon);

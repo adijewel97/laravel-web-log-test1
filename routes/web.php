@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\CMstDistribusi;
 use App\Http\Controllers\CLoginUser;
 use App\Http\Controllers\CProeseMIV;
+use App\Http\Controllers\CProeseMIVTxt;
 
 
 /*
@@ -170,7 +171,7 @@ Route::POST('/masterup3', function (Request $request) {
 // ---------------------------------------------------------------
 //====================================================================================================================================
 
-// 4a Download proses file rcn Bank
+// 4a1 Download proses file rcn Bank
 //=======================================================================
 Route::get('/ProsesFileRCNBank', function (Request $request) {
     try {
@@ -213,11 +214,11 @@ Route::get('/ProsesFileRCNBank', function (Request $request) {
     }
 });
 
-//4b  baca list file *.rcn yang ada fi ftp
+//4a2  baca list file *.rcn yang ada fi ftp
 //=======================================================================
 Route::get('/list-ftp-files-rcn', [CProeseMIV::class, 'get_list_ftp_files_rcn'])->name('mproses.daftar-file-ftp-rcn');
 
-//4c  baca list file *.rcn yang ada di ftp dan lakukan insert db miv dan
+//4a3  baca list file *.rcn yang ada di ftp dan lakukan insert db miv dan
 //=======================================================================
 //  - move file rcn ke dari folder lunas ke lunas\proses jika ada data yg dinsert ke db jika sudah ada file di folder
 //    lunas\proses lakukan rename menambahkan seq contoh
@@ -225,6 +226,32 @@ Route::get('/list-ftp-files-rcn', [CProeseMIV::class, 'get_list_ftp_files_rcn'])
 //    POS5215020220908016-20220917-200CA01.rcn.ctl menjadi POS5215020220908016-20220917-200CA01_R001.rcn.ctl
 //  - jika sudah ada di db semuanya tanpa berhasil 1 pun masuk ke lunas/gagal dan jika sudah ada nama file tambahka _Rxxx = XXX = Seq
 Route::get('/proses-ftp-files-rcn', [CProeseMIV::class, 'proses_file_rcn'])->name('mproses.proses-file-ftp-rcn');
+
+
+// 4b1 tampilkan view upload kirm ulang file txt miv ke bank (bank gagal download file dan ke delete/gagal)
+//=======================================================================
+Route::get('/ProsesKirimUlangFileTXTBank', function (Request $request) {
+    return view('mivproses/vProsesKirimUlangFileTXTBank', [
+        'menuname'      => 'MIV - Proses/File RCN Bank',
+        'title'         => 'Proses Kirim Ulang File TXT Ke Bank MIV'
+    ]);
+});
+
+//4b2 script untuk buat nama file *.txt dan *.txt.ctl
+//=======================================================================
+Route::get('/proses-nama-files-txt', [CProeseMIVTxt::class, 'buat_nama_files_txt_miv'])->name('mproses.proses-nama-file-txt');
+
+//4b3 script untuk isi file data yang belum lunas aja dari db MIV nousulan file txt
+//=======================================================================
+Route::get('/proses-detail-files-txt', [CProeseMIVTxt::class, 'buat_detail_files_txt_miv'])->name('mproses.proses-detail-file-txt');
+
+//4b4 script untuk rekap file data yang belum lunas aja dari db MIV nousulan file txt.ctl
+//=======================================================================
+Route::get('/proses-rekap-files-txt', [CProeseMIVTxt::class, 'buat_rekap_files_txt_miv'])->name('mproses.proses-rekap-file-txt');
+
+//4b5 Create file *.txt
+//=======================================================================
+Route::get('/proses-file-txt_pos', [CProeseMIVTxt::class, 'proses_file_txt_pos'])->name('mproses.proses-file-txt-pos');
 
 
 
