@@ -197,12 +197,20 @@
 
                     if (req.responseJSON && req.responseJSON.Message) {
                         errorMessage = req.responseJSON.Message;
+                        errorkode = '001';
                     } else if (req.responseText) {
                         errorMessage = req.responseText;
+                        errorkode = '002';
                     } else {
                         errorMessage = "An unknown error occurred.";
+                        errorkode = '003';
                     }
-                    ShowMsgSm('Sukses', errorMessage, 'MB_CLOSE');
+
+                    if (errorkode == '002') {
+                        ShowMsgSm('Sukses', 'Session User Habis Silahkan Login Uang.', 'MB_CLOSE');
+                    } else {
+                        ShowMsgSm('Sukses', errorMessage, 'MB_CLOSE');
+                    }
                 }
             });
         }
@@ -380,11 +388,8 @@
     <script>
         $(function() {
             //Date picker
-            // $('#tglfiletxt').datetimepicker({
-            //     // format: 'L',
-            //     format: 'MMMM YYYY',
-            // });
             $('#tglfiletxt').datetimepicker({
+                // format: 'L',
                 format: 'DD MMMM YYYY',
             });
 

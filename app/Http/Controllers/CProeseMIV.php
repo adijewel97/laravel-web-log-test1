@@ -322,7 +322,6 @@ class CProeseMIV extends Controller
                                 'items'             => $json_data,
                             ];
 
-
                             if ($file_produk == 'POS') {
                                 $data = $request->session()->all();
                                 $dataUser = $data['_datalogin']['data']['user']['username'];

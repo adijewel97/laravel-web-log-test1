@@ -34,7 +34,7 @@ class CProeseMIVTxt extends Controller
             'nama_file'        => $MyData1,
             // 'nousulan'          => $nousulan,
             // 'tglfile'           => $tglfile,
-            'token'             => $request->Session()->get('_datalogin.data.token')
+            // 'token'             => $request->Session()->get('_datalogin.data.token')
             // 'path_chek'         => $directories
         ];
         return json_encode($mydata);
@@ -101,28 +101,110 @@ class CProeseMIVTxt extends Controller
         return json_encode($mydata);
     }
 
-    function proses_kirim_file_txt_keftp($file)
+    function proses_kirim_file_txt_keftp(Request $request, $localFileName)
     {
-        // POS23BTG20240116002
-        if (pathinfo($file, PATHINFO_EXTENSION) === 'txt') {
+        $localFilePath = 'TXT_FILE/' . $localFileName;
+        // Ensure the local file exists
+        if (Storage::exists($localFilePath)) {
+            $mstbankmiv = Http::withToken($request->session()->get('_datalogin.data.token'))
+            ->post(
+                config('myconfig.variable.SVR_URL_API') . 'getmstbankmiv',
+                [
+                    'kdbank' => 'ALL'
+                ]
+            )->json();
+
+            $mstbanks = $mstbankmiv['data'];
+            $MstProduk = substr($localFileName, 0, 3);
+            $Mstkdbankfile = substr($localFileName, 29, 3);
+
+            $indexproduk = 0;
+            if ($MstProduk === 'PRE') {
+                $indexproduk = 1;
+            } else if ($MstProduk === 'NTL') {
+                $indexproduk = 2;
+            }
+
+            $MstProduks = ['POSTPAID', 'PREPAID', 'NTLS'];
+            $remoteFilePathdaftar = '';
+            foreach ($mstbanks as $mstbank) {
+                if ($mstbank['KODE_BANK'] == $Mstkdbankfile) {
+                    $remoteFilePathdaftar = '/vertikal/' . $mstbank['KODE_ERP'] . '/' . $mstbank['KODE_BANK'] .
+                    'CA01/' .  $MstProduks[$indexproduk] . '/daftar';
+                    break; // Exit the loop once a matching bank is found
+                }
+            }
+
             $status = '200';
             $message = 'file txt miv berhasil dikirim ke ftp folder daftar';
         } else {
             $status = '401';
             $message = 'file txt miv gagal dikirim ke ftp folder daftar';
-        }
+        };
+
+
+        // if (Storage::exists($localFilePath)) {
+        //     // ambil master bank miv
+        //     $mstbankmiv = Http::withToken($request->session()->get('_datalogin.data.token'))
+        //     ->post(
+        //         config('myconfig.variable.SVR_URL_API') . 'getmstbankmiv',
+        //         [
+        //             'kdbank' => 'ALL'
+        //         ]
+        //     )->json();
+
+        //     $mstbanks = $mstbankmiv['data'];
+        //     $MstProduk = substr($localFileName, 0, 3);
+        //     $Mstkdbankfile = substr($localFileName, 29, 3);
+
+        //     $indexproduk = 0;
+        //     if ($MstProduk === 'PRE') {
+        //         $indexproduk = 1;
+        //     } else if ($MstProduk === 'NTL') {
+        //         $indexproduk = 2;
+        //     }
+
+        //     $MstProduks = ['POSTPAID', 'PREPAID', 'NTLS'];
+        //     $remoteFilePathdaftar = '';
+        //     foreach ($mstbanks as $mstbank) {
+        //         if ($mstbank['KODE_BANK'] == $Mstkdbankfile) {
+        //             $remoteFilePathdaftar = '/vertikal/' . $mstbank['KODE_ERP'] . '/' . $mstbank['KODE_BANK'] .
+        //             'CA01/' .  $MstProduks[$indexproduk] . '/daftar';
+        //             break; // Exit the loop once a matching bank is found
+        //         }
+        //     }
+
+        //     // Use the 'ftp' disk driver
+        //     $diskftp = Storage::disk('ftp');
+
+        //     // Upload the file to the FTP server
+        //     $result = $diskftp->put($remoteFilePathdaftar, $localFilePath);
+
+        //     if ($result) {
+        //     // File uploaded successfully
+        //     $status = '200';
+        //     $message = 'file txt miv berhasil dikirim ke ftp folder daftar';
+        // } else {
+        //     // File upload failed
+        //     $status = '401';
+        //     $message = 'file txt miv gagal dikirim ke ftp folder daftar';
+        // }
 
         $info_filetxt_toftp[] = [
-            'status'            => $status,
-            'message'           => $message
+            'status'  => $status,
+            'message' => $message,
+            'bank_miv' =>  $mstbankmiv,
+            'localPathfile' =>  $localFilePath,
+            'remotPathfile' =>  $remoteFilePathdaftar
         ];
+
         return json_encode($info_filetxt_toftp);
     }
 
     function proses_file_txt_pos(Request $request)
     {
         $Nama_file_txt    = $request->input('vNama_file_txt');
-        $Nama_file_txtctl =  $Nama_file_txt . '.ctl';
+        $Nama_file_txtctl = $Nama_file_txt . '.ctl';
         $nousulan         = $request->input('vnousulan');
         $tglfile          = $request->input('vtglfile');
 
@@ -171,7 +253,15 @@ class CProeseMIVTxt extends Controller
             $vproduk = ' ';
             if (substr($Nama_file_txt, 0, 3) == 'POS') {
                 $vproduk = 'Pospaid';
-                $statuskirimftp[] = $this->proses_kirim_file_txt_keftp($Nama_file_txt);
+                $Nama_file_remot = '';
+                // $statuskirimftp[] = $this->proses_kirim_file_txt_keftp($Nama_file_txt);
+                $result = $this->proses_kirim_file_txt_keftp($request, $Nama_file_txt);
+                // Decode the JSON string
+                $info = json_decode($result, true);
+                // Check if decoding was successful
+                if ($info !== null) {
+                    $message = $info[0]['message'];
+                } 
             } else if (substr($Nama_file_txt, 0, 3) == 'PRE') {
                 $vproduk = 'Prepaid';
             } else if (substr($Nama_file_txt, 0, 3) == 'NTL') {
@@ -182,7 +272,7 @@ class CProeseMIVTxt extends Controller
                 'kdstatus' => '200',
                 'status'  => 'success',
                 'message' => 'File Txt MIV ' . $vproduk . ' sukses diproses dan Disimpan.',
-                'Info_kirim_ftp' =>  $statuskirimftp,
+                'Info_kirim_ftp' =>   $info,
                 'data_detil'    => $MyData_detil['data'],
             ];
         } else {
