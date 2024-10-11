@@ -4,8 +4,7 @@
     <title>MIV P2APST - Monitoring</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte320/docs/assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
@@ -28,33 +27,12 @@
     <link rel="stylesheet" href="{{ asset('adminlte320/plugins/daterangepicker/daterangepicker.css') }}">
 
     <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet"
-        href="{{ asset('adminlte320/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte320/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('adminlte320/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('adminlte320/plugins/toastr/toastr.min.css') }}">
-
-    <!-- Inline CSS untuk mengatur hal lainnya -->
-    <style>
-        .bootstrap-iso .formden_header h2,
-        .bootstrap-iso .formden_header p,
-        .bootstrap-iso form {
-            font-family: Arial,
-            Helvetica,
-
-            <style>.inputstl {
-                padding: 9px;
-                border: solid 1px #B3FFB3;
-                outline: 0;
-                background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #A4FFA4), to(#FFFFFF));
-                background: -moz-linear-gradient(top, #FFFFFF, #A4FFA4 1px, #FFFFFF 25px);
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-                -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-                -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-            }
-    </style>
 
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> --}}
@@ -62,6 +40,11 @@
 
     {{-- alert boostrap from javasecript me --}}
     <script type="text/javascript" src="{{ asset('mystyle/js/myalertbs.js') }}"></script>
+
+    <!-- grafik -->
+    <!-- <script src="{{ asset('adminlte320/plugins/chart.js/Chart.min.js')  }}"></script> -->
+    <link rel="stylesheet" href="{{ asset('adminlte320/plugins//chart.js/Chart.min.css') }}">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 
 </head>
 {{--

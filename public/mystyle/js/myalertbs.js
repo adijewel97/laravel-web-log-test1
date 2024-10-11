@@ -4,8 +4,10 @@
         tybtn =  '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
     };
 
-    let myscript =
-        '<div class="modal fade tabindex="-1" id="bs-alert">'+
+    let myscript ='';
+
+    myscript =
+        '<div class="modal fade" tabindex="-1" id="bs-alert">'+
             '<div class="modal-dialog">'+    //    '<div class="modal-dialog modal-sm">'+
                 '<div class="modal-content">'+
                     '<div class="modal-header">'+
@@ -30,5 +32,8 @@
        $("#bs-alert .modal-body").text(message);
     }
 
-   $("#bs-alert").modal();
+    $("#bs-alert").modal();
  }
+
+
+ 

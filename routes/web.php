@@ -42,6 +42,7 @@ use App\Http\Controllers\CProeseMIVTxt;
 //====================================================================================================================================
 Route::get('/', function (Request $request) {
     // $data = $request->session()->all();
+    // dd($request->session()->get('_datalogin.kode'));
     if (($request->session()->exists('_datalogin')) && ($request->session()->get('_datalogin.kode') == 200)) {
         $msg = $request->session()->get('_datalogin.message');
         return view('dashboards/vDashboardPerDist', ['title' => 'Home', 'message' => $msg]);
@@ -55,7 +56,20 @@ Route::get('/', function (Request $request) {
 Route::get('/login', function (Request $request) {
     // $request->session()->invalidate();
     // dd($request->session()->invalidate());
-    return view('layouts/login', ['title' => 'Login', 'message' => '']);
+    // return view('layouts/login', ['title' => 'Login', 'message' => '']);
+    if (($request->session()->exists('_datalogin')) && ($request->session()->get('_datalogin.kode') == 200)) {
+        $msg = $request->session()->get('_datalogin.message');
+        return view('dashboards/vDashboardPerDist', ['title' => 'Home', 'message' => $msg]);
+    } else {
+        $data = $request->session()->all();
+        // dd($data);
+        return view('layouts/login', ['title' => 'Login', 'message' => '']);
+    }
+});
+
+Route::post('/clear-err-msg', function () {
+    session()->forget('err_msg');
+    return response()->json(['message' => 'Session berhasil dihapus']);
 });
 
 // Route::get('/users', function () {
@@ -116,20 +130,20 @@ Route::get('getdasboardperdist', function (Request $request) {
                     'blthlaporan' => $blthlaporan
                 ]
             );
-        // return $MstDistData['data'];
+        return $MyData;
         // return DataTables::of($MstDistData['data'])->make(true);
         // dd($MyData);
-        return DataTables::of($MyData['data'])
-            ->addIndexColumn()
-            // ->addColumn('kd_nama_dist', function ($data) {
-            //     return  $data->DIST;
-            // })
-            // ->addColumn('action', function ($row) {
-            //     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-            //     return $actionBtn;
-            // })
-            // ->rawColumns(['action'])
-            ->make(true);
+        // return DataTables::of($MyData['data'])
+        //     ->addIndexColumn()
+        //     // ->addColumn('kd_nama_dist', function ($data) {
+        //     //     return  $data->DIST;
+        //     // })
+        //     // ->addColumn('action', function ($row) {
+        //     //     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+        //     //     return $actionBtn;
+        //     // })
+        //     // ->rawColumns(['action'])
+        //     ->make(true);
     }
 })->name('dashboard.flagperdist');
 

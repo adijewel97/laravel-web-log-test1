@@ -2,78 +2,93 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MIV - Management Instansi Vertikal</title>
-
-    <link rel="stylesheet" href="{{ asset('mystyle/css/style.css') }}">
-
-    <!-- Bootstrap 4 -->
-    {{-- <link rel="stylesheet" href="{{ asset('adminlte320/dist/css/adminlte.css') }}"> --}}
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
-    {{-- alert boostrap from javasecript me --}}
-    <script src="{{ asset('mystyle/js/myalertbs.js') }}"></script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MIV P2APST | Management Instansi Vertikal</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="{{asset('adminlte320/plugins')}}/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="{{asset('adminlte320/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <link rel="stylesheet" href="{{asset('adminlte320/plugins')}}/toastr/toastr.min.css">
+  <link rel="stylesheet" href="{{asset('adminlte320/dist')}}/css/adminlte.min.css?v=3.2.0">
+  <link rel="stylesheet" href="{{ asset('mystyle/css/style.css') }}">
+  <script src="{{ asset('mystyle/js/myalertbs.js') }}"></script>
 </head>
 
-<body>
-    {{-- <div>{{ $message }}</div> --}}
-    @include('sweetalert::alert')
-
-    @if (session()->has('err_msg'))
-    <div class="alert alert-success">
-        {{ session()->get('err_msg') }}
+<body class="hold-transition sidebar-mini">
+  @if (session()->has('err_msg'))
+  <div class="modal fade" tabindex="-1" id="bs-alert2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ session()->get('err_msg') }}&hellip;</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        alert("{{ session()->get('message') }}");
-        // ShowMsgSm('Info', "{{ session()->get('err_msg') }}", 'MB_CLOSE');
-    </script>
-    @endif
-
-    <section>
-        <div class="login-box">
-            <form action="/loginuser" method="post" enctype="multipart/form-data">
-                @csrf
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                {{-- <div class="logo">
-                    <img src="{{ asset('images/Logo_PLN.png') }}">
-        </div> --}}
+  <script>
+    window.onload = function() {
+      fetch('/clear-err-msg', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Session berhasil dihapus');
+          } else {
+            console.error('Gagal menghapus session');
+          }
+        })
+        .catch(error => {
+          console.error('Terjadi kesalahan:', error);
+        });
+      $('#btnmsg').click();
+    }
+  </script>
+  @endif
+  <section>
+    <div class="login-box">
+      <form action="/loginuser" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <h2>LOGIN</h2>
         <p class="aplikasi">Monitoring & Laporan MIV P2APST</p>
         <div class="input-box">
-            <span class="icon">
-                <ion-icon name="mail"></ion-icon>
-            </span>
-            <input type="text" name="email" value="{{ old('email') }}" required autofocus>
-            <label>Email / User Name</label>
-
+          <span class="icon"><ion-icon name="mail"></ion-icon></span>
+          <input type="text" name="email" value="{{ old('email') }}" autofocus>
+          <label>Email / User Name</label>
         </div>
         <div class="input-box">
-            <span class="icon">
-                <ion-icon name="lock-closed"></ion-icon>
-            </span>
-            <input type="password" name="password" required autocomplete="current-password">
-            <label>Password</label>
-
+          <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" name="password">
+          <label>Password</label>
         </div>
         <div class="remember-forgate">
-            <label><input type="checkbox"> Remember me </label><a href="">Forgot Password ?</a>
+          <label><input type="checkbox"> Remember me </label><a href="">Forgot Password ?</a>
         </div>
         <button class="btn" type="submit">Login</button>
+        <button type="button" class="btn btn-default" id="btnmsg" hidden data-toggle="modal" data-target="#bs-alert2">Launch Default Modal</button>
         <div class="register-link">
-            <p>Don't have an accunt ? <a href="">Register</a></p>
+          <p>Don't have an accunt ? <a href="">Register</a></p>
         </div>
-        </form>
-        </div>
-    </section>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+      </form>
+    </div>
+  </section>
+  <script src="{{asset('adminlte320/plugins')}}/jquery/jquery.min.js"></script>
+  <script src="{{asset('adminlte320/plugins')}}/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{{asset('adminlte320/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+  <script src="{{asset('adminlte320/plugins')}}/toastr/toastr.min.js"></script>
+  <script src="{{asset('adminlte320/plugins')}}/js/adminlte.min.js?v=3.2.0"></script>
+  <script src="{{asset('adminlte320/plugins')}}/js/demo.js"></script>
 </body>
 
 </html>

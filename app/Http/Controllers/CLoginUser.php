@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CLoginUser extends Controller
 {
@@ -14,67 +16,148 @@ class CLoginUser extends Controller
         $email      = $request->input('email');
         $password   = $request->input('password');
 
-        // dd(config('myconfig.variable.SVR_URL_API') . 'login');
-        // die();
-        $LoginUserAction = http::post(
-            config('myconfig.variable.SVR_URL_API') . 'login',
-            [
-                'username' => $email,
-                'password' => $password,
-            ]
-        )->json();
-        // )->body();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required', // Tambahkan validasi untuk password
+        ], [
+            'required' => 'Data :attribute harus diisi.',
+        ]);
 
+        // Memeriksa apakah validasi gagal
+        if ($validator->fails()) {
+            // return redirect()->back()
+            //     ->withErrors($validator)  // Mengirim pesan error ke halaman sebelumnya
+            //     ->withInput();           // Mengembalikan input yang sudah diisi sebelumnya
+            $firstErrors = $validator->errors()->first(); // Mengambil pesan kesalahan pertama untuk setiap kunci
+            // dd($firstErrors);
+            return redirect()->back()->with('err_msg', $firstErrors)->withInput();
+        } else {
+            // dd(config('myconfig.variable.SVR_URL_API') . 'login');
+            $LoginUserAction = http::post(
+                config('myconfig.variable.SVR_URL_API') . 'login',
+                [
+                    'username' => $email,
+                    'password' => $password,
+                ]
+            )->json();
 
-        // dd($LoginUserAction);
-        // dd($request->session()->all());
-        // dd($LoginUserAction);
+            // dd($LoginUserAction);
+            // dd($request->session()->all());
+            // dd($LoginUserAction);
 
-        if (isset($LoginUserAction)) {
-            // Lakukan sesuatu dengan $myArray[$index]
-            // dd('1 - ' . $password . ' ' . $password . ' ' . $LoginUserAction);
-            if (($request->session()->exists('_datalogin')) && ($request->session()->get('_datalogin.kode') == 200)) {
+            if (!empty($LoginUserAction)) {
                 // dd('1');
-                $request->session()->put('_datalogin', $LoginUserAction);
-                $msg = $LoginUserAction['message'];
-                return view('dashboards/vDashboardPerDist', ['title' => 'Dashboard', 'message' => $msg]);
+                // $request->session()->regenerate();
+                // dd($request->session()->get('_datalogin.kode'));
+                if (($request->session()->exists('_datalogin')) && ($request->session()->get('_datalogin.kode') == 200)) {
+                    // dd('1.1');
+                    $request->session()->put('_datalogin', $LoginUserAction);
+                    if ($LoginUserAction['kode'] == 200) {
+                        // dd('1.2.1');
+                        // Panggil lis menu role user
+                        $msg        = $LoginUserAction['message'];
+                        $UserToken  = $request->Session()->get('_datalogin.data.token');
+
+                        // panggil daftar list menu dari API
+                        $UserListMenu = http::withToken($UserToken)
+                            ->post(
+                                config('myconfig.variable.SVR_URL_API') . 'getlistmenu',
+                                [
+                                    'emiluser' => $request->Session()->get('_datalogin.data.user.email')
+                                ]
+                            )->json();
+
+                        // dd($UserListMenu);
+                        // dd($UserListMenu['kode']);
+                        // dd($UserListMenu['message']);
+
+                        //jika lismenu api sukses dapat data
+                        if ($UserListMenu['kode'] == '200') {
+                            // dd('3.2.1.a');
+                            //buat session untuk listmenu
+                            $request->session()->put('UserListMenu', $UserListMenu['data']);
+                            return view('dashboards/vDashboardPerDist', ['title' => 'Home', 'message' => $msg]);
+                        } else {
+                            // dd('3.2.1.b');
+                            // Lismenu tidak terbaca
+                            session()->flush();
+                            return redirect()->back()->with('err_msg', $UserListMenu['message']);
+                        }
+                    } else {
+                        // dd('1.2.2');
+                        $msg = $LoginUserAction['message'];
+                        return redirect()->back()->with('err_msg', $msg);
+                    }
+                } else {
+                    // dd('1.2');
+                    // return redirect()->back()->with('err_msg', '3.2');
+                    $request->session()->regenerate();
+                    $request->session()->put('_datalogin', $LoginUserAction);
+                    // dd($LoginUserAction);
+                    if ($LoginUserAction['kode'] == 200) {
+                        // dd('1.2.1');
+                        // Panggil lis menu role user
+                        $msg        = $LoginUserAction['message'];
+                        $UserToken  = $request->Session()->get('_datalogin.data.token');
+
+                        // panggil daftar list menu dari API
+                        $UserListMenu = http::withToken($UserToken)
+                            ->post(
+                                config('myconfig.variable.SVR_URL_API') . 'getlistmenu',
+                                [
+                                    'emiluser' => $request->Session()->get('_datalogin.data.user.email')
+                                ]
+                            )->json();
+
+                        // dd($UserListMenu);
+                        // dd($UserListMenu['kode']);
+                        // dd($UserListMenu['message']);
+
+                        //jika lismenu api sukses dapat data
+                        if ($UserListMenu['kode'] == '200') {
+                            // dd('3.2.1.a');
+                            //buat session untuk listmenu
+                            $request->session()->put('UserListMenu', $UserListMenu['data']);
+                            return view('dashboards/vDashboardPerDist', ['title' => 'Home', 'message' => $msg]);
+                        } else {
+                            // dd('3.2.1.b');
+                            // Lismenu tidak terbaca
+                            session()->flush();
+                            return redirect()->back()->with('err_msg', $UserListMenu['message']);
+                        }
+                    } else {
+                        // dd('1.2.2');
+                        $msg = $LoginUserAction['message'];
+                        return redirect()->back()->with('err_msg', $msg);
+                    }
+                }
             } else {
                 // dd('2');
-                $request->session()->regenerate();
-                $request->session()->put('_datalogin', $LoginUserAction);
-
-                if ($LoginUserAction['kode'] == 200) {
-                    // Panggil lis menu role user
-                    $msg        = $LoginUserAction['message'];
-                    $UserToken  = $request->Session()->get('_datalogin.data.token');
-
-                    // panggil daftar list menu dari API
-                    $UserListMenu = http::withToken($UserToken)
-                        ->post(
-                            config('myconfig.variable.SVR_URL_API') . 'getlistmenu',
-                            [
-                                'emiluser' => $request->Session()->get('_datalogin.data.user.email')
-                            ]
-                        )
-                        ->json();
-                    //buat session untuk listmenu
-                    $request->session()->put('UserListMenu', $UserListMenu['data']);
-
-                    return view('dashboards/vDashboardPerDist', ['title' => 'Home', 'message' => $msg]);
-                } else {
-                    $msg = $LoginUserAction['message'];
-                    // Alert::error('Error Login', $msg);
-                    // return back()->with('login error', $msg);
-                    return redirect()->back()->with('err_msg', $msg);
-                }
+                $msg = 'Error Data login User';
+                return redirect()->back()->with('err_msg', $msg);
             }
-        } else {
-            // Handle jika $myArray[$index] adalah null
-            // dd('2' . $LoginUserAction);
-            $msg = 'Error Data login User';
-            return redirect()->back()->with('err_msg', $msg);
         }
+
+        // $email      = $request->input('email');
+        // $password   = $request->input('password');
+
+        // // Lakukan permintaan HTTP hanya jika validasi berhasil
+        // $LoginUserAction = http::post(
+        //     config('myconfig.variable.SVR_URL_API') . 'login',
+        //     [
+        //         'username' => $email,
+        //         'password' => $password,
+        //     ]
+        // )->json();
+
+        // // Memeriksa apakah respons dari API kosong atau tidak
+        // if (!empty($LoginUserAction)) {
+        //     return redirect()->back()->with('err_msg', '1');
+        // } else {
+        //     return redirect()->back()->with('err_msg', '2');
+        // }
     }
+
 
     function actionlogout(Request $request)
     {
@@ -85,7 +168,7 @@ class CLoginUser extends Controller
                 $dataUser = $data['_datalogin']['data'];
                 $LoginUserAction = http::withToken($dataUser['token'])
                     ->post(
-                        'http://mivp2apstpln-api-v2.test/api/mivp2apstpln/logout'
+                        'http://mivp2apstpln-api2.test/api/mivp2apstpln/logout'
                     )
                     ->json();
 

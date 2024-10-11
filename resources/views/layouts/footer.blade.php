@@ -26,6 +26,9 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminlte320/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- SweetAlert2 -->
-<script src="{{ asset('adminlte320/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<!-- <script src="{{ asset('adminlte320/plugins/sweetalert2/sweetalert2.min.js') }}"></script> -->
 <!-- Toastr -->
 <script src="{{ asset('adminlte320/plugins/toastr/toastr.min.js') }}"></script>
+
+<!-- grafik -->
+<script src="{{ asset('adminlte320/plugins/chart.js/Chart.min.js')  }}"></script>
