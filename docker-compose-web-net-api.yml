@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  appweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_mivp2apstpln_webv31
+    image: laravel_mivp2apstpln_webv31:latest
+    volumes:
+      - .:/var/www/mivp2apstpln_webv31
+    ports:
+      - "9001:9000" # Expose port for PHP-FPM
+    environment:
+      - SVR_API_SVR_URL=http://nginx_apiserver:80 # Tambahkan variabel lingkungan lain jika diperlukan
+    networks:
+      - laravel_mivp2apst_net
+    tty: true
+    restart: unless-stopped # Tambahkan restart policy
+
+  webserver:
+    container_name: nginx_webserver
+    image: nginx:alpine
+    volumes:
+      - .:/var/www/mivp2apstpln_webv31
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8081:80" # Expose port for Nginx
+    depends_on:
+      - appweb
+    networks:
+      - laravel_mivp2apst_net
+    restart: unless-stopped # Tambahkan restart policy
+
+networks:
+  laravel_mivp2apst_net:
+    external: true

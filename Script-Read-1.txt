@@ -1,0 +1,39 @@
+docker network create laravel_shared_network
+
+docker-compose down --remove-orphans
+docker-compose up -d --remove-orphans
+
+
+docker-compose exec appweb php artisan key:generate
+
+docker-compose exec appweb composer install --no-dev --optimize-autoloader
+
+composer.json
+"require": {
+fony/web-server-bundle": "4.4.*"
+}
+
+php artisan config:clear
+php artisan cache:clear
+php artisan config:cache
+composer dump-autoload
+php artisan optimize:clear
+
+composer update
+
+1. docker network create laravel_mivp2apst_net
+2. Catatan Penting :
+ - docker run -it --rm --network laravel_mivp2apst_net alpine sh
+ - apk add curl
+ - apk update
+ - apk add curl
+
+  # Coba akses API dari kontainer web
+ - curl http://nginx_apiserver:80
+
+  # Coba akses Web dari kontainer API (jika diperlukan)
+ - curl http://nginx_webserver:80
+
+
+
+
