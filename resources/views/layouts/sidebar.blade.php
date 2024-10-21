@@ -97,60 +97,60 @@
                 </li> --}}
 
                 @if (Session::exists('UserListMenu'))
-                    @foreach (Session::get('UserListMenu') as $item)
-                        @if ($item['LEVELMENU'] == '1')
-                            <?php
-                            $reset = substr($item['IDMENU'], 0, 1);
-                            // in_array($string, $array)
-                            $urlsub = [];
-                            foreach (Session::get('UserListMenu') as $submenu) {
-                                if ($item['IDMENU'] == $submenu['IDMAINMENU']) {
-                                    array_push($urlsub, $submenu['URL']);
-                                }
-                            }
-                            
-                            if ($item['AKTIF'] == 1 || in_array('/' . Request::segment(1), $urlsub)) {
-                                $opensubmenu = 'enu-is-opening menu-open';
-                            } else {
-                                $opensubmenu = '';
-                            }
-                            
-                            ?>
-                            <li class="nav-item {{ $opensubmenu }}" style="font-size: 12px">
-                                {{-- <li class="nav-item enu-is-opening menu-open"> --}}
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas {{ $item['ICON'] }}"></i>
-                                    {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
-                                    <p>
-                                        {{ $item['NAMAMENU'] }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                            @elseif ($item['LEVELMENU'] == '2')
-                                <ul class="nav nav-treeview" style="font-size: 10px">
-                                    <li class="nav-item">
-                                        <a href="{{ $item['URL'] }}" {{-- class="nav-link" --}}
-                                            class="nav-link {{ '/' . Request::segment(1) === $item['URL'] ? 'active' : null }}"
-                                            id="{{ $item['IDMENU'] }}">
-                                            {{-- <i class="far fa-circle nav-icon"></i> --}}
-                                            {{-- <p><u>{{ $item['NAMAMENU'] }}</u></p> --}}
-                                            <p>{{ $item['NAMAMENU'] }}
-                                            </p>
-                                        </a>
-                                    </li>
-                                </ul>
-                        @endif
+                @foreach (Session::get('UserListMenu') as $item)
+                @if ($item['LEVELMENU'] == '1')
+                <?php
+                $reset = substr($item['IDMENU'], 0, 1);
+                // in_array($string, $array)
+                $urlsub = [];
+                foreach (Session::get('UserListMenu') as $submenu) {
+                    if ($item['IDMENU'] == $submenu['IDMAINMENU']) {
+                        array_push($urlsub, $submenu['URL']);
+                    }
+                }
 
-                        @if ($reset != substr($item['IDMENU'], 0, 1))
-                            </li>
-                        @endif
-                    @endforeach
-                    </br></br></br>
+                if ($item['AKTIF'] == 1 || in_array('/' . Request::segment(1), $urlsub)) {
+                    $opensubmenu = 'enu-is-opening menu-open';
+                } else {
+                    $opensubmenu = '';
+                }
+
+                ?>
+                <li class="nav-item {{ $opensubmenu }}" style="font-size: 12px">
+                    {{-- <li class="nav-item enu-is-opening menu-open"> --}}
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas {{ $item['ICON'] }}"></i>
+                        {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
+                        <p>
+                            {{ $item['NAMAMENU'] }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    @elseif ($item['LEVELMENU'] == '2')
+                    <ul class="nav nav-treeview" style="font-size: 10px">
+                        <li class="nav-item">
+                            <a href="{{ $item['URL'] }}" {{-- class="nav-link" --}}
+                                class="nav-link {{ '/' . Request::segment(1) === $item['URL'] ? 'active' : null }}"
+                                id="{{ $item['IDMENU'] }}">
+                                {{-- <i class="far fa-circle nav-icon"></i> --}}
+                                {{-- <p><u>{{ $item['NAMAMENU'] }}</u></p> --}}
+                                <p>{{ $item['NAMAMENU'] }}
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                    @endif
+
+                    @if ($reset != substr($item['IDMENU'], 0, 1))
+                </li>
+                @endif
+                @endforeach
+                </br></br></br>
                 @else
-                    {{-- dd('hello') --}}
-                    <script>
-                        window.location = "/login";
-                    </script>
+                {{-- dd('hello') --}}
+                <script>
+                    window.location = "/login";
+                </script>
                 @endif
 
     </div>
@@ -183,5 +183,6 @@
             return this.href == url;
         }).closest('.treeview').addClass('active');
     </script>
+
 
 </aside>

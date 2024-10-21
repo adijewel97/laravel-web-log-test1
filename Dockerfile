@@ -3,11 +3,13 @@ FROM php:8.1-fpm
 
 # Install necessary extensions
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
+    libaio1 \
     unzip \
+    wget \
+    libssl-dev \
+    libcurl4-openssl-dev \
     git \
-    curl \
-    && docker-php-ext-install zip pdo pdo_mysql
+    curl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -15,8 +17,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set the working directory
 WORKDIR /var/www/mivp2apstpln_webv31
 
-# Copy the entire application code
-COPY . .
+# Copy application code and environment variables
+COPY . /var/www/mivp2apstpln_webv31/
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
@@ -32,4 +34,4 @@ RUN chown -R www-data:www-data /var/www/mivp2apstpln_webv31 && \
 EXPOSE 9000
 
 # Start PHP-FPM
-CMD ["php-fpm"]
+CMD ["php-fpm7.4", "-F"]

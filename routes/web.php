@@ -527,6 +527,7 @@ Route::get('/list-ftp-files', function (Request $request) {
     }
 
     $mydata = [
+        'chek'              => $directories,
         'status'            =>  $kdstatus,
         'message'           => $msg ?? "Files Sukses di Tampilkan !",
         'downloaded_files'  => $mydatafile,
@@ -562,6 +563,7 @@ Route::get('/download-struk-pdf', function (Request $request) {
             }
 
             $localFilePath  = 'public/report/' . $namafileremot; // Nama file untuk disimpan di lokal
+
 
             if ($ftpDisk->exists($file)) {
                 //copy file dari ftp ke local aplikasi storage/app/public

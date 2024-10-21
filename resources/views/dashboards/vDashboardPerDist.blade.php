@@ -292,6 +292,8 @@
                 //Iterating through the array using forEach
                 // var res_file = response.downloaded_files;
                 // res_file.forEach((file, index) => {
+                $('#loadingSpinner').show();
+                $('.overlay').show();
                 if (response.status = '200') {
                     // ShowMsgSm('Sukses', response.message, 'MB_CLOSE');
                     if (response.kode = '200') {
@@ -415,10 +417,22 @@
                             options: barOptions_lbr
                         });
                         // ShowMsgSm('Sukses', response.message, 'MB_CLOSE');
+                        setTimeout(function() {
+                            // Menyembunyikan spinner dan overlay setelah proses selesai
+                            $('#loadingSpinner').hide();
+                            $('.overlay').hide();
+                            // alert("Data berhasil diproses!");
+                        }, 3000);
                     } else {
                         ShowMsgSm('Error', response.message, 'MB_CLOSE');
                     }
                 } else {
+                    setTimeout(function() {
+                        // Menyembunyikan spinner dan overlay setelah proses selesai
+                        $('#loadingSpinner').hide();
+                        $('.overlay').hide();
+                        // alert("Data berhasil diproses!");
+                    }, 1000);
                     ShowMsgSm('Error', response.message, 'MB_CLOSE');
                 };
             },
@@ -430,6 +444,12 @@
             // }
             error: function(request, error) {
                 console.log(arguments);
+                setTimeout(function() {
+                    // Menyembunyikan spinner dan overlay setelah proses selesai
+                    $('#loadingSpinner').hide();
+                    $('.overlay').hide();
+                    // alert("Data berhasil diproses!");
+                }, 1000);
                 ShowMsgSm('Error', 'Terjadi kesalahan : ' + error, 'MB_CLOSE');
             },
         });

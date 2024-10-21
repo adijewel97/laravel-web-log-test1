@@ -46,6 +46,10 @@
     <link rel="stylesheet" href="{{ asset('adminlte320/plugins//chart.js/Chart.min.css') }}">
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 
+    <!-- Muat CSS eksternal -->
+    <link rel="stylesheet" href="{{ asset('mystyle/css/style_loading.css') }}">
+
+
 </head>
 {{--
 <script nonce="0fbd91f6-7ccc-40a8-8cec-0b730d09e61e">
