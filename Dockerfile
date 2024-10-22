@@ -30,7 +30,7 @@ RUN chown -R www-data:www-data /var/www/mivp2apstpln_webv31 && \
     chmod -R 775 /var/www/mivp2apstpln_webv31/storage /var/www/mivp2apstpln_webv31/bootstrap/cache && \
     chown -R www-data:www-data /var/www/mivp2apstpln_webv31/storage /var/www/mivp2apstpln_webv31/bootstrap/cache 
 
-# Run storage:link
+# Run storage:link 
 RUN php artisan storage:link
 
 # Expose port 9000 for PHP-FPM
