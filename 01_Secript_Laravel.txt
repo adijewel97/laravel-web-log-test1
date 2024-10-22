@@ -15,6 +15,8 @@ php artisan route:clear
 php artisan view:clear
 php artisan optimize:clear
 
+ssss
+
 npm install
 npm run production
 
