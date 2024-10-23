@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/mivp2apstpln_webv31
 
 # Copy application code and environment variables
-COPY . /var/www/mivp2apstpln_webv31/
+COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader

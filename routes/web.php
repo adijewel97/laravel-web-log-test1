@@ -485,60 +485,119 @@ Route::get('/RepCetakStrukMIV', function (Request $request) {
     ]);
 });
 
-//5b baca list file struk yang ada fi ftp
+//5b1 Chek koneksi ftp
+Route::get('/check-ftp-connection', function () {
+    try {
+        // Path FTP yang akan dicek
+        $path = '/vertikal/2000001/200CA01/POSTPAID/lunas/struk';
+        // /vertikal/2000001/200CA01/POSTPAID/lunas/struk
+        $files = Storage::disk('ftp')->files($path);
+
+        // Cek apakah ada file di dalam path
+        if (empty($files)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tidak ada file di path tersebut.'
+            ]);
+        }
+
+        // Jika ada file
+        return response()->json([
+            'success' => true,
+            'message' => 'Ada file di path tersebut.',
+            'files' => $files
+        ]);
+    } catch (\Exception $e) {
+        // Jika gagal, kembalikan pesan error
+        return response()->json([
+            'success' => false,
+            'message' => 'Koneksi FTP gagal: ' . $e->getMessage()
+        ]);
+    }
+});
+
+//5b2 baca list file struk yang ada fi ftp
 Route::get('/list-ftp-files', function (Request $request) {
-    // Mendapatkan daftar semua direktori pada disk FTP
-    // $directories = Storage::disk('ftp')->allDirectories('/vertikal');
     $blthlaporan      = $request->input('vblthlaporan');
     list($vkdbank, $kderp) = explode('|', $request->input('vkdbank'));
     $kdbank           = $vkdbank . 'CA01';
     $uiw              = $request->input('vuiw');
     $up3              = $request->input('vup3');
-    // '/vertikal/2000001/200CA01/PREPAID/lunas/struk',
     $directories = [
         '/vertikal/' . $kderp . '/' . $kdbank . '/POSTPAID/lunas/struk',
         '/vertikal/' . $kderp . '/' . $kdbank . '/NTLS/lunas/struk',
         '/vertikal/' . $kderp . '/' . $kdbank . '/PREPAID/lunas/struk',
     ];
+
     $mydatafile = [];
-    foreach ($directories as $directory) {
-        $files = Storage::disk('ftp')->allFiles($directory);
-        foreach ($files as $file) {
-            if (pathinfo($file, PATHINFO_EXTENSION) === 'pdf') {
-                $namafile = pathinfo($file, PATHINFO_BASENAME);
-                $vfile_uiw = substr($namafile, 3, 2);
-                $vfile_up3 = substr($namafile, 3, 5);
-                $vfile_crt = substr($namafile, 8, 6);
-                if (($vfile_crt === $blthlaporan) and ($vfile_uiw === $uiw) and
-                    (($vfile_up3 === $up3) or ('ALL' === $up3))
-                ) {
-                    $kdstatus = '200';
-                    $mydatafile[] = [
-                        'path'      => $directory,
-                        'file'      => $namafile,
-                        'file_uiw'  => $vfile_uiw,
-                        'file_up3'  => $vfile_up3,
-                        'file_crt'  => $vfile_crt,
-                        'status'    => 'Sukses Baca File di FTP'
-                    ];
+    $kdstatus = '404'; // Inisialisasi status awal
+    $msg = "Gagal koneksi ke FTP atau file tidak ditemukan";
+    $success = false;
+
+    try {
+        // Loop melalui setiap direktori
+        foreach ($directories as $directory) {
+            // Ambil semua file di direktori
+            // $files = Storage::disk('ftp')->allFiles($directory);
+            $files = Storage::disk('ftp')->Files($directory);
+
+            // Cek apakah ada file di dalam direktori
+            if (!empty($files)) {
+                foreach ($files as $file) {
+                    if (pathinfo($file, PATHINFO_EXTENSION) === 'pdf') {
+                        $namafile = pathinfo($file, PATHINFO_BASENAME);
+                        $vfile_uiw = substr($namafile, 3, 2);
+                        $vfile_up3 = substr($namafile, 3, 5);
+                        $vfile_crt = substr($namafile, 8, 6);
+
+                        if (($vfile_crt === $blthlaporan) && ($vfile_uiw === $uiw) &&
+                            (($vfile_up3 === $up3) || ($up3 === 'ALL'))
+                        ) {
+                            $success = true;
+                            $kdstatus = '200';
+                            $msg = 'Sukses, file ditemukan.';
+                            $mydatafile[] = [
+                                'path'      => $directory,
+                                'file'      => $namafile,
+                                'file_uiw'  => $vfile_uiw,
+                                'file_up3'  => $vfile_up3,
+                                'file_crt'  => $vfile_crt,
+                                'status'    => 'Sukses Baca File di FTP'
+                            ];
+                        }
+                    }
                 }
             }
         }
+
+        // Jika tidak ada file yang ditemukan
+        if (empty($mydatafile)) {
+            $kdstatus = '404';
+            $msg = 'Gagal, Tidak ada file Terbaca. ';
+        }
+    } catch (\Exception $e) {
+        // Tangani kesalahan koneksi FTP
+        $kdstatus = '500';
+        $msg = 'Gagal Koneksi FTP: ' . $e->getMessage();
     }
 
+    // Data respons
     $mydata = [
-        'chek'              => $directories,
-        'status'            =>  $kdstatus,
-        'message'           => $msg ?? "Files Sukses di Tampilkan !",
-        'downloaded_files'  => $mydatafile,
-        'vblthlaporan'      => $blthlaporan,
-        'vkdbank'           => $kdbank,
-        'vkderp'            => $kderp,
-        'vuiw'              => $uiw,
-        'vup3'              => $up3
+        'directories_checked' => $directories,
+        'status'              => $kdstatus,
+        'success'             => $success,
+        'message'             => $msg,
+        'downloaded_files'    => $mydatafile,
+        'vblthlaporan'        => $blthlaporan,
+        'vkdbank'             => $kdbank,
+        'vkderp'              => $kderp,
+        'vuiw'                => $uiw,
+        'vup3'                => $up3
     ];
-    return json_encode($mydata);
+
+    return response()->json($mydata);
 })->name('monlap.daftar-file-ftp');
+
 
 //5c download file lebih dari 1 atau 1 struk pdf
 Route::get('/download-struk-pdf', function (Request $request) {
@@ -607,7 +666,7 @@ Route::get('/download-struk-pdf', function (Request $request) {
             }
         } catch (\Exception $e) {
             $kdstatus = '401';
-            $msg = "Error: " . $e->getMessage();
+            $msg = "Error Ftp : " . $e->getMessage();
         }
     }
 

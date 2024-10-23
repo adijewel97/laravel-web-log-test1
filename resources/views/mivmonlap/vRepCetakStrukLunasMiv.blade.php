@@ -228,12 +228,13 @@
                                 $('.overlay').hide();
                                 // alert("Data berhasil diproses!");
                             }, 100);
+                        } else {
+                            $('#loadingSpinner').hide();
+                            $('.overlay').hide();
+                            $("#pathfile").html('');
+                            ShowMsgSm('Info', respon.status + ' - ' + respon.message,
+                                'MB_CLOSE');
                         }
-                        // } else {
-                        //     $("#pathfile").html('');
-                        //     ShowMsgSm('Error', respon.status + ' - ' + respon.message,
-                        //         'MB_CLOSE');
-                        // }
                     },
                     error: function(req, status, error) {
                         setTimeout(function() {
@@ -245,7 +246,7 @@
                         var err = req.responseText.Message;
                         console.log(err);
                         $("#pathfile").html('');
-                        ShowMsgSm('Error', 'File Tidak DiTemukan ! ',
+                        ShowMsgSm('Error', 'File Tidak DiTemukan/Chek Koneksi FTP ! ',
                             'MB_CLOSE');
                     }
                 });

@@ -61,7 +61,7 @@ return [
             'port'     => env('FTP_PORT'),
             'root' => env('FTP_ROOT'),
             'ssl'      => env('FTP_SSL', false),
-            'timeout'  => env('FTP_TIMEOUT', 30)
+            'timeout'  => env('FTP_TIMEOUT', 10)
         ],
 
     ],

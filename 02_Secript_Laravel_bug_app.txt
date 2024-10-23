@@ -1,0 +1,40 @@
+1. ftp tidak mentampilkan data saat conet/disconect
+   - disconnect agar muncul pesan dari raravel       
+      config/filesystems.php:
+      php
+      'ftp' => [
+         'driver'   => 'ftp',
+         'host'     => env('FTP_HOST'),
+         'username' => env('FTP_USERNAME'),
+         'password' => env('FTP_PASSWORD'),
+         'timeout'  => 10,  // Ubah timeout jadi lebih pendek, misalnya 10 detik
+      ],
+
+      try {
+        // Path FTP yang akan dicek
+        $path = '/vertikal/2000001/200CA01/POSTPAID/lunas/struk';
+        $files = Storage::disk('ftp')->files($path);
+
+        // Cek apakah ada file di dalam path
+        if (empty($files)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tidak ada file di path tersebut.'
+            ]);
+        }
+
+        // Jika ada file
+        return response()->json([
+            'success' => true,
+            'message' => 'Ada file di path tersebut.',
+            'files' => $files
+        ]);
+    } catch (\Exception $e) {
+        // Jika gagal, kembalikan pesan error
+        return response()->json([
+            'success' => false,
+            'message' => 'Koneksi FTP gagal: ' . $e->getMessage()
+        ]);
+    }
+
+2. 
