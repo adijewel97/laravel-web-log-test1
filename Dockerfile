@@ -37,4 +37,4 @@ RUN php artisan storage:link
 EXPOSE 9000
 
 # Start PHP-FPM
-CMD ["php-fpm7.4", "-F"]
+CMD ["php-fpm"]
