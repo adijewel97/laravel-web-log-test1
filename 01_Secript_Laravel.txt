@@ -67,7 +67,11 @@ isue saat start :
          try_files $uri $uri/ =404;
       }
 
+5. cara buat cronjob hapus file pdf yg lebih 1 jam
+   docker exec -it laravel_mivp2apstpln_webv31 /bin/bash
 
+   find /var/www/mivp2apstpln_webv31/storage/app/public/report -type f -name "*.pdf" -mmin +60 -delete
+ 
 -------------------------------------------------------------------------------
 1. saat download file pdf error 404 not foun lakukan perintah
     php artisan storage:link

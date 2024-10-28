@@ -1,7 +1,7 @@
 # Dockerfile for Laravel Web Application
 FROM php:8.1-fpm
 
-# Install necessary extensions
+# Install necessary extensions and cron
 RUN apt-get update && apt-get install -y \
     libaio1 \
     unzip \
@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libcurl4-openssl-dev \
     git \
-    curl
+    curl \
+    cron  # Install cron
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -33,8 +34,21 @@ RUN chown -R www-data:www-data /var/www/mivp2apstpln_webv31 && \
 # Run storage:link 
 RUN php artisan storage:link
 
+# Create the cronjob script to delete old PDFs
+RUN echo "find /var/www/mivp2apstpln_webv31/storage/app/public/report -type f -name '*.pdf' -mmin +60 -delete" > /usr/local/bin/cleanup_pdfs.sh && \
+    chmod +x /usr/local/bin/cleanup_pdfs.sh
+
+# Add the cronjob to crontab
+RUN echo '0 * * * * /usr/local/bin/cleanup_pdfs.sh' > /etc/cron.d/cleanup_pdfs
+
+# Apply cronjob permissions
+RUN chmod 0644 /etc/cron.d/cleanup_pdfs
+
+# Register cron job
+RUN crontab /etc/cron.d/cleanup_pdfs
+
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# Start cron and PHP-FPM
+CMD cron && php-fpm
